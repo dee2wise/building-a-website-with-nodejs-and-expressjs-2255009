@@ -1,14 +1,15 @@
 const express = require('express');
 const path = require('path');
-
+const routes = require('./routes');
 const app = express();
 const port = 3000;
 
 
 //midddleware to serve static files
 app.use(express.static('static'));
-
-
+app.set('view engine','ejs');
+app.set('views',path.join(__dirname,'./views'));
+app.use('/',routes());
 
 // server is listening on port 3000
 app.listen(port,(err)=>{
@@ -19,14 +20,4 @@ app.listen(port,(err)=>{
     }
 });
 
-// route for the root path
-app.get('/',(req,res)=>{
-    res.sendFile(path.join(__dirname,'./static/index.html'));
-    console.log('Request received');
-});
-
-app.get('/speakers',(req,res)=>{
-    res.sendFile(path.join(__dirname,'./static/speakers.html'));
-    console.log('Request received for speakers');
-});
 
